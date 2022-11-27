@@ -1,2 +1,22 @@
-# Differentially-Private-Misra-Gries
-Python implementation of a differentially private Misra-Gries sketch
+# Differentially Private Misra-Gries Sketch
+This is a Python implementation of a differentially private Misra-Gries sketch, as described in the paper [1] paper by Christian Lebeda and Jakub Tětek.
+
+## How to use
+We implement on class: DPMisraGriesSketch. It has the following methods:
+
+\__init__(k) - this method inicializes the sketch with size k
+update(x) - this method adds the element x to the sketch
+get_counts() - this method returns the counts stored by the sketch.
+    !!! THIS VIOLATES PRIVACY. USE WITH CAUTION !!!
+privately_release(epsilon, delta) - this privately releases the approximate histogram
+    This method is (epsilon,delta)-differentially private for the given values of parameters
+    May be used multiple times (subject to deteriorating privacy by composition)
+
+    !!! Subject to the caveats below. !!!
+    """
+
+## Caveats of this implementatoin
+In this implementation, we ignore issues with floating points. If this algorithm is to be used, it should be re-implemented using a library that implements the Laplace mechanism. We also do not use cryptography-grade randomness, which also possibly leaks some information.
+
+
+[1] TODO
