@@ -4,16 +4,15 @@ This is a Python implementation of a differentially private Misra-Gries sketch, 
 ## How to use
 In the file misra_gries.py, we implement one class: DPMisraGriesSketch. It has the following methods:
 
-\__init__(k) - this method inicializes the sketch with size k
-update(x) - this method adds the element x to the sketch
-get_counts() - this method returns the counts stored by the sketch.
-    !!! THIS VIOLATES PRIVACY. USE WITH CAUTION !!!
-privately_release(epsilon, delta) - this privately releases the approximate histogram
-    This method is (epsilon,delta)-differentially private for the given values of parameters
-    May be used multiple times (subject to deteriorating privacy by composition)
+* \__init__(k) - this method inicializes the sketch with size k
+* update(x) - this method adds the element x to the sketch
+* get_counts() - this method returns the counts stored by the sketch.  
+&nbsp;&nbsp;&nbsp;&nbsp;    !!! THIS VIOLATES PRIVACY. USE WITH CAUTION !!!
+* privately_release(epsilon, delta) - this privately releases the approximate histogram  
+&nbsp;&nbsp;&nbsp;&nbsp;    This method is (epsilon,delta)-differentially private for the given values of parameters  
+&nbsp;&nbsp;&nbsp;&nbsp;    May be used multiple times (subject to deteriorating privacy by composition)  
 
-    !!! Subject to the caveats below. !!!
-    """
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    !!! Subject to the caveats below. !!!
 
 We also implement two simple tests in the file test.py.
 
