@@ -29,6 +29,7 @@ class DPMisraGries:
         self.sketch_size = sketch_size
         self.counters = {}
         self.input_size = 0
+        self.nonzeroes = 0
 
         for i in range(sketch_size):
             # In the paper, we use unique elements at initialization.
@@ -43,20 +44,32 @@ class DPMisraGries:
         self.input_size += 1
         if item in self.counters:
             self.counters[item] += 1
-        elif len(self.counters) < self.sketch_size:
-            self.counters[item] = 1
-        else:
-            zero_keys = set()
+            if self.counters[item] == 1:
+                self.nonzeroes += 1
 
+        elif self.nonzeroes < self.sketch_size:
+            # we remove the item with a zero count that has the smallest key
+            zero_keys = set()
             for key in self.counters:
-                self.counters[key] -= 1
                 if self.counters[key] == 0:
                     zero_keys.add(key)
 
+            assert len(zero_keys) == self.sketch_size - self.nonzeroes
             min_key = min(zero_keys)
 
             del self.counters[min_key]
+            
+            # now we can add the new item
             self.counters[item] = 1
+            self.nonzeroes += 1
+
+        else:
+            for key in self.counters:
+                self.counters[key] = max(0,self.counters[key] - 1)
+                if self.counters[key] == 0:
+                    self.nonzeroes -= 1
+
+            
 
     def get_counts(self):
         """This method returns the counts stored by the sketch.
@@ -76,7 +89,7 @@ class DPMisraGries:
 
         global_laplace = laplace(0, 1/epsilon)
 
-        key_value_pairs = self.counters.items()
+        key_value_pairs = list(self.counters.items())
         # need to permute the values as the order may depend on the order
         #   in which we entered things into the counters dictionary
         shuffle(key_value_pairs)
