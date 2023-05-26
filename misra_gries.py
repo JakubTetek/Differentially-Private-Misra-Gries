@@ -1,6 +1,6 @@
 """
 This module implements a differentially private version of the Misra-Gries sketch.
-This algorithm has been described by Christian Lebeda and Jakub Tetek in the paper TODO
+This algorithm has been described by Christian Lebeda and Jakub Tetek in the paper "Better Differentially Private Approximate Histograms and Heavy Hitters using the Misra-Gries Sketch"
 
 It implements one class: DPMisraGries
 """
