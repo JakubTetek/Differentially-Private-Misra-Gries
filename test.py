@@ -64,8 +64,9 @@ class TestMisraGries(unittest.TestCase):
                     freq_sketch[item] = 0
 
             for item in freq.keys():
+                # All items are in this range with high probability
                 self.assertLessEqual(freq_sketch[item] - freq[item], 20*eps)
-                self.assertGreaterEqual(freq_sketch[item] - freq[item], - input_size/sketch_size - 20*eps - 1 - log(3/delta))
+                self.assertGreaterEqual(freq_sketch[item] - freq[item], - input_size/sketch_size - 20*eps - 1 - log(3/delta)/eps)
 
 if __name__ == '__main__':
     unittest.main()

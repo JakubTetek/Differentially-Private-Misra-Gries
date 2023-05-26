@@ -15,14 +15,14 @@ class DPMisraGries:
     This class implements a differentially private version of the Misra-Gries sketch.
 
     It implements the following methods:
-        __init__(k) - this method inicializes the sketch with size k
+        __init__(k) - this method initializes the sketch with size k
         update(x) - this method adds the element x to the sketch
         get_counts() - this method returns the counts stored by the sketch.
             !!! THIS VIOLATES PRIVACY. USE WITH CAUTION !!!
         privately_release(epsilon, delta) - this privately releases the approximate histogram
             This method is (epsilon,delta)-differentially private for the given values of parameters
             May be used multiple times (subject to deteriorating privacy by composition)
-            !!! Read the caveates about our implementation in the README !!!
+            !!! Read the caveats about our implementation in the README !!!
     """
 
     def __init__(self, sketch_size):
@@ -43,6 +43,7 @@ class DPMisraGries:
         """Calling update(x) adds the element x to the sketch"""
         self.input_size += 1
         if item in self.counters:
+            # increment counter
             self.counters[item] += 1
             if self.counters[item] == 1:
                 self.nonzeroes += 1
@@ -64,6 +65,7 @@ class DPMisraGries:
             self.nonzeroes += 1
 
         else:
+            # decrement all counters. Keep track of the number of nonzeroes
             for key in self.counters:
                 self.counters[key] = max(0,self.counters[key] - 1)
                 if self.counters[key] == 0:
@@ -83,7 +85,7 @@ class DPMisraGries:
         May be used multiple times (subject to deteriorating privacy by composition).
 
         
-        !!! Read the caveates about our implementation in the README !!!
+        !!! Read the caveats about our implementation in the README !!!
         """
         privatized_counters = {}
 
@@ -95,7 +97,7 @@ class DPMisraGries:
         shuffle(key_value_pairs)
         for key, value in key_value_pairs:
             new_value = value + global_laplace + laplace(0, 1/epsilon)
-            if new_value >= 1+2*log(3/delta): # TODO check that this matches the final value in the paper
+            if new_value >= 1+2*log(3/delta)/epsilon: 
                 privatized_counters[key] = new_value
 
         return privatized_counters
