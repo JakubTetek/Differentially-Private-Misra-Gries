@@ -20,4 +20,4 @@ We also implement two simple tests in the file test.py.
 In this implementation, we ignore issues with floating points. If this algorithm is to be used, it should be re-implemented using a library that implements the Laplace mechanism. We also do not use cryptography-grade randomness, which also possibly leaks some information.
 
 
-[1] TODO
+[1] Better Differentially Private Approximate Histograms and Heavy Hitters using the Misra-Gries Sketch
